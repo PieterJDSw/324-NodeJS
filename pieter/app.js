@@ -23,7 +23,7 @@ const hoursRoute = require('./api/routes/hours');
 console.log('APP.js net voor middleware');
 app.use(morgan('combined', { stream: accessLogStream }));
 
-//CORS ERROR HANDLING INGEBOU***********
+//CORS ERROR HANDLING INGEBOU***********(2)
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use((req,res,next)=>{
@@ -36,8 +36,8 @@ if(req.method === 'OPTIONS')
 }
 next();
 });
-//CORS ERROR HANDLING EINDE******************
-//routes to handle requests///////
+//CORS ERROR HANDLING EINDE******************(2)
+//routes to handle requests///////(3)
 
 app.use('/dosente',dosentRoute);
 app.use('/subjects',vakkeRoute);
@@ -49,8 +49,8 @@ app.use('/image',imageRoute);
 app.use('/hours',hoursRoute);
 
 app.use('./uploads',express.static('uploads'));
-
-
+//********************(3) */
+//algemene errors hanteer soos 500 internal server errors*******(4)
 app.use((req,res,next)=>{
   const error = new Error('not found');
   error.status = 404;
@@ -67,5 +67,6 @@ app.use((error,req,res,next)=>{
   });
 
 });
+//**************************** (4)*/
 module.exports = app;
 // mongod.exe --dbpath /Users/User/mongodata      C:\Program Files\MongoDB\Server\4.0
